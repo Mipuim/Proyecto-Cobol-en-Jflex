@@ -118,13 +118,13 @@ public class FrmPrincipal extends JFrame {
 							resultado += "<PROGRAM-ID>\t" + lexer.lexeme + nuevaLinea;
 							break;
 						case DATA_DIVISION:
-							resultado += "<DATA DIVISION>\t\t" + lexer.lexeme + nuevaLinea;
+							resultado += "<DATA DIVISION>\t" + lexer.lexeme + nuevaLinea;
 							break;
 						case WORKING_STORAGE_SECTION:
-							resultado += "<WORKING-STORAGE SECTION>\t\t" + lexer.lexeme + nuevaLinea;
+							resultado += "<WORKING-STORAGE SECTION>\t" + lexer.lexeme + nuevaLinea;
 							break;
 						case PROCEDURE_DIVISION:
-							resultado += "<PROCEDURE DIVISION>\t\t" + lexer.lexeme + nuevaLinea;
+							resultado += "<PROCEDURE DIVISION>\t" + lexer.lexeme + nuevaLinea;
 							break;
 						case DISPLAY:
 							resultado += "<DISPLAY>\t\t" + lexer.lexeme + nuevaLinea;
