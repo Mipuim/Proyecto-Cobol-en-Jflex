@@ -54,3 +54,7 @@ public class PrincipalCUP {
         );
     }
 }
+
+
+
+/*C:\Users\SARA\eclipse-workspace\ProyectoCobol\src\codigo>java -cp C:\Users\SARA\eclipse-workspace\ProyectoCobol\Librerias\java_cup.jar java_cup.Main -parser Sintax -symbols sym C:\Users\SARA\eclipse-workspace\ProyectoCobol\src\codigo\Sintaxis.cup*/

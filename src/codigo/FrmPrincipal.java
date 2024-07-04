@@ -111,33 +111,61 @@ public class FrmPrincipal extends JFrame {
 							resultado += "Linea " + contador + nuevaLinea;
 							System.out.println("hola linea");
 							break;
-						case IDENTIFICATION_DIVISION:
+						case IdentificationDivision:
 							resultado += "<IDENTIFICATION DIVISION>\t\t" + lexer.lexeme + nuevaLinea;
 							break;
-						case PROGRAM_ID:
+						case PogramId:
 							resultado += "<PROGRAM-ID>\t" + lexer.lexeme + nuevaLinea;
 							break;
-						case DATA_DIVISION:
+						case DataDivision:
 							resultado += "<DATA DIVISION>\t" + lexer.lexeme + nuevaLinea;
 							break;
-						case WORKING_STORAGE_SECTION:
+						case WorkingStorageSection:
 							resultado += "<WORKING-STORAGE SECTION>\t" + lexer.lexeme + nuevaLinea;
 							break;
-						case PROCEDURE_DIVISION:
+						case ProcedureDivision:
 							resultado += "<PROCEDURE DIVISION>\t" + lexer.lexeme + nuevaLinea;
 							break;
-						case DISPLAY:
+						case Display:
 							resultado += "<DISPLAY>\t\t" + lexer.lexeme + nuevaLinea;
 							break;
-						case ACCEPT:
+						case Accept:
 							resultado += "<ACCEPT>\t\t" + lexer.lexeme + nuevaLinea;
 							break;
-						case COMPUTE:
+						case Compute:
 							resultado += "<COMPUTE>\t\t" + lexer.lexeme + nuevaLinea;
 							break;
-						case STOP_RUN:
+						case StopRun:
 							resultado += "<STOP RUN>\t\t" + lexer.lexeme + nuevaLinea;
 							break;
+						case Pic:
+							resultado += "<PIC>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case Value:
+							resultado += "<VALUE>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+							
+							
+						case If:
+							resultado += "<IF>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case MayorQue:
+							resultado += "<MAYOR QUE>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case MenorQue:
+							resultado += "<MENOR QUE>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case MayorIgual:
+							resultado += "<MAYOR IGUAL>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case MenorIgual:
+							resultado += "<MENOR IGUAL>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case Diferente:
+							resultado += "<DIFERENTE>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+							
+							
 						case Suma:
 							resultado += "<Suma>\t\t" + lexer.lexeme + nuevaLinea;
 							break;
@@ -187,24 +215,29 @@ public class FrmPrincipal extends JFrame {
 		JTextArea txtResultado_Sintactico = new JTextArea();
 		txtResultado_Sintactico.setBounds(12, 512, 412, 35);
 		contentPane.add(txtResultado_Sintactico);
-		/*
-		 * JButton btnAnalizarSintactico = new JButton("Analizar - Sintactico");
-		 * btnAnalizarSintactico.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) {
-		 * 
-		 * String ST = txtAnalizar.getText(); Sintax s = new Sintax(new
-		 * codigo.LexerCup(new StringReader(ST)));
-		 * 
-		 * try { s.parse();
-		 * txtResultado_Sintactico.setText("Analisis realizado correctamente");
-		 * txtResultado_Sintactico.setForeground(new Color(25, 111, 61)); } catch
-		 * (Exception ex) { Symbol sym = s.getS();
-		 * txtResultado_Sintactico.setText("Error de sintaxis. Linea: " + (sym.right +
-		 * 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
-		 * txtResultado_Sintactico.setForeground(Color.red); }
-		 * 
-		 * } }); btnAnalizarSintactico.setBounds(10, 479, 414, 23);
-		 * contentPane.add(btnAnalizarSintactico);
-		 */	
+		
+		JButton btnAnalizarSintactico = new JButton("Analizar - Sintactico");
+		btnAnalizarSintactico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				String ST = txtAnalizar.getText();
+				Sintax s = new Sintax(new codigo.LexerCup(new StringReader(ST)));
+
+				try {
+					s.parse();
+					txtResultado_Sintactico.setText("Analisis realizado correctamente");
+					txtResultado_Sintactico.setForeground(new Color(25, 111, 61));
+				} catch (Exception ex) {
+					Symbol sym = s.getS();
+					txtResultado_Sintactico.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: "
+							+ (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
+					txtResultado_Sintactico.setForeground(Color.red);
+				}
+
+			}
+		});
+		btnAnalizarSintactico.setBounds(10, 479, 414, 23);
+		contentPane.add(btnAnalizarSintactico);
+		 	
 	}
 }
