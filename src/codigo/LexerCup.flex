@@ -9,7 +9,7 @@ import java_cup.runtime.Symbol;
 %char
 L=[a-zA-Z_]+
 D=[0-9]+
-espacio=[ \t\r\n]+
+espacio=[ ,\t,\r,\n]+
 %{
     private Symbol symbol(int type, Object value){
         return new Symbol(type, yyline, yycolumn, value);
@@ -23,32 +23,62 @@ espacio=[ \t\r\n]+
 /* Espacios en blanco */
 {espacio} {/*Ignore*/}
 
-/* Comentarios (Asterisco en la columna 7) */
-^.{6}\*.* { /*Ignore*/ }
+/* Comentarios */
+( "//"(.)* ) {/*Ignore*/}
 
-/* Palabras reservadas de COBOL */
-(IDENTIFICATION DIVISION) {return symbol(sym.IDENTIFICATION_DIVISION, yytext());}
-(PROGRAM-ID) {return symbol(sym.PROGRAM_ID, yytext());}
-(DATA DIVISION) {return symbol(sym.DATA_DIVISION, yytext());}
-(WORKING-STORAGE SECTION) {return symbol(sym.WORKING_STORAGE_SECTION, yytext());}
-(PROCEDURE DIVISION) {return symbol(sym.PROCEDURE_DIVISION, yytext());}
-(DISPLAY) {return symbol(sym.DISPLAY, yytext());}
-(ACCEPT) {return symbol(sym.ACCEPT, yytext());}
-(COMPUTE) {return symbol(sym.COMPUTE, yytext());}
-(STOP RUN) {return symbol(sym.STOP_RUN, yytext());}
+/* Tipos de datos */
+( byte | char | long | float | double ) {return new Symbol(sym.T_dato, yychar, yyline, yytext());}
 
-/* Operadores */
-"+" {return symbol(sym.Suma, yytext());}
-"-" {return symbol(sym.Resta, yytext());}
-"*" {return symbol(sym.Multiplicacion, yytext());}
-"/" {return symbol(sym.Division, yytext());}
-"=" {return symbol(sym.Igual, yytext());}
-"." {return symbol(sym.Punto, yytext());}
-"," {return symbol(sym.Coma, yytext());}
+/* Tipo de dato Int (Para el main) */
+( "int" ) {return new Symbol(sym.Int, yychar, yyline, yytext());}
 
-/* Identificador y Números */
-{L}({L}|{D})* {return symbol(sym.Identificador, yytext());}
-{D}+ {return symbol(sym.Numero, yytext());}
+/* Palabra reservada If */
+( if ) {return new Symbol(sym.If, yychar, yyline, yytext());}
 
-/* Error de análisis */
-. {return symbol(sym.ERROR, yytext());}
+/* Palabra reservada Else */
+( else ) {return new Symbol(sym.Else, yychar, yyline, yytext());}
+
+/* Palabra reservada While */
+( while ) {return new Symbol(sym.While, yychar, yyline, yytext());}
+
+/* Operador Igual */
+( "=" ) {return new Symbol(sym.Igual, yychar, yyline, yytext());}
+
+/* Operador Suma */
+( "+" ) {return new Symbol(sym.Suma, yychar, yyline, yytext());}
+
+/* Operador Resta */
+( "-" ) {return new Symbol(sym.Resta, yychar, yyline, yytext());}
+
+/* Operador Multiplicacion */
+( "*" ) {return new Symbol(sym.Multiplicacion, yychar, yyline, yytext());}
+
+/* Operador Division */
+( "/" ) {return new Symbol(sym.Division, yychar, yyline, yytext());}
+
+/* Parentesis de apertura */
+( "(" ) {return new Symbol(sym.Parentesis_a, yychar, yyline, yytext());}
+
+/* Parentesis de cierre */
+( ")" ) {return new Symbol(sym.Parentesis_c, yychar, yyline, yytext());}
+
+/* Llave de apertura */
+( "{" ) {return new Symbol(sym.Llave_a, yychar, yyline, yytext());}
+
+/* Llave de cierre */
+( "}" ) {return new Symbol(sym.Llave_c, yychar, yyline, yytext());}
+
+/* Marcador de inicio de algoritmo */
+( "main" ) {return new Symbol(sym.Main, yychar, yyline, yytext());}
+
+/* Punto y coma */
+( ";" ) {return new Symbol(sym.P_coma, yychar, yyline, yytext());}
+
+/* Identificador */
+{L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}
+
+/* Numero */
+("(-"{D}+")")|{D}+ {return new Symbol(sym.Numero, yychar, yyline, yytext());}
+
+/* Error de analisis */
+ . {return new Symbol(sym.ERROR, yychar, yyline, yytext());}

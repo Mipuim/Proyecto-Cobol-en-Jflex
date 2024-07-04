@@ -7,5 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/SARA/eclipse-workspace/ProyectoCobol/Librerias/JFlex.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SARA/eclipse-workspace/ProyectoCobol/Librerias/java_cup.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SARA/eclipse-workspace/ProyectoCobol/Librerias/java-cup-11a.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
