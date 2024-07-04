@@ -21,6 +21,64 @@ parser code {:
 
 :};
 
+terminal IdentificationDivision, DataDivision, ProcedureDivision, ProgramId,
+	WorkingStorageSection, Nivel, TipoDato, ValorEspecial, StopRun, Display, Accept, Compute,
+	Suma, Resta, Multiplicacion, Division, If, Else, Pic, Value, 
+	Igual, MenorQue, MayorQue, MenorIgual, MayorIgual, Diferente,
+	Punto, Identificador, Numero, NumeroDecimal, Cadena, ERROR;
+
+non terminal INICIO, DATA, PROCEDIMIENTO, DECLARACION, LITERAL, SENTENCIAS, SENTENCIA, 
+	MOSTRAR, EXPRESION, CONDICIONALES_ESTRUCTURA, IFCONDITION, VALOR, CONDICION;
+
+
+INICIO ::= IdentificationDivision Punto ProgramId Punto Identificador Punto DATA PROCEDIMIENTO;
+
+DATA ::= DataDivision Punto WorkingStorageSection Punto DECLARACION Punto;
+
+DECLARACION ::= Nivel Identificador Pic TipoDato Value LITERAL Punto |
+				Nivel Identificador Pic TipoDato Punto;
+
+LITERAL ::= Numero | NumeroDecimal | Cadena | ValorEspecial;
+
+PROCEDIMIENTO ::= ProcedureDivision Punto SENTENCIAS StopRun Punto;
+
+SENTENCIAS ::= SENTENCIA | SENTENCIAS SENTENCIA;
+
+SENTENCIA ::= Display MOSTRAR Punto |
+				Accept Identificador Punto |
+				Compute Identificador Igual EXPRESION Punto |
+				CONDICIONALES_ESTRUCTURA Punto;
+				
+MOSTRAR ::= Cadena | Identificador;
+
+EXPRESION ::= Identificador | LITERAL |
+				Identificador Suma Identificador |
+				Identificador Resta Identificador |
+				Identificador Multiplicacion Identificador |
+				Identificador Division Identificador ;
+
+CONDICIONALES_ESTRUCTURA ::= IFCONDITION;
+
+IFCONDITION ::= If VALOR CONDICION VALOR SENTENCIA |
+				If VALOR CONDICION VALOR SENTENCIA Else SENTENCIA; 
+		
+VALOR ::= Identificador | Numero | Cadena | NumeroDecimal | ValorEspecial;
+
+CONDICION ::= Igual | MenorQue | MayorQue | MenorIgual | MayorIgual | Diferente;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 terminal Linea, T_dato, Int, If, Else, While, 
     Igual, Suma, Resta, Multiplicacion, Division, Parentesis_a, Parentesis_c,
     Llave_a, Llave_c, Main, P_coma, Identificador, Numero, ERROR;

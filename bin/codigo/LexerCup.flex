@@ -21,64 +21,73 @@ espacio=[ ,\t,\r,\n]+
 %%
 
 /* Espacios en blanco */
-{espacio} {/*Ignore*/}
+{espacio} {/*Ignore*/} 
 
 /* Comentarios */
-( "//"(.)* ) {/*Ignore*/}
+^.{6}\*.*          				{ /* Línea con asterisco en la columna 7 */ }
+
+/* Divisiones de un programa Cobol */
+( "IDENTIFICATION DIVISION" ) 	{return new Symbol(sym.IdentificationDivision, yychar, yyline, yytext());}
+( "DATA DIVISION" ) 			{return new Symbol(sym.DataDivision, yychar, yyline, yytext());}
+( "PROCEDURE DIVISION" ) 		{return new Symbol(sym.ProcedureDivision, yychar, yyline, yytext());}
+
+/* Dar nombre al programa*/
+( "PROGRAM-ID" ) 				{return new Symbol(sym.ProgramId, yychar, yyline, yytext());}
+
+/* Declaracion de variables WORKING-STORAGE SECTION*/
+("WORKING-STORAGE SECTION")		{return new Symbol(sym.WorkingStorageSection, yychar, yyline, yytext());}
+
+/* Nivel para declarar variables */
+( '77'|'01')					{return new Symbol(sym.Nivel, yychar, yyline, yytext());}
 
 /* Tipos de datos */
-( byte | char | long | float | double ) {return new Symbol(sym.T_dato, yychar, yyline, yytext());}
+( '9\\(' {D} '\\)' | 'X\\(' {D} '\\)' | 'A\\(' {D} '\\)' | '9\\(' {D} '\\)V' {D} | 'S9\\(' {D} '\\)' | 'S9\\(' {D} '\\)V' {D} ) 	{return new Symbol(sym.TipoDato, yychar, yyline, yytext());}
 
-/* Tipo de dato Int (Para el main) */
-( "int" ) {return new Symbol(sym.Int, yychar, yyline, yytext());}
+/* Valor Especial */
+( 'TRUE' | 'FALSE' | 'ZERO' ) 	{return new Symbol(sym.ValorEspecial, yychar, yyline, yytext());}
 
-/* Palabra reservada If */
-( if ) {return new Symbol(sym.If, yychar, yyline, yytext());}
+/* STOP RUN Finalizar el programa */
+( "STOP RUN" ) 					{return new Symbol(sym.StopRun, yychar, yyline, yytext());}
 
-/* Palabra reservada Else */
-( else ) {return new Symbol(sym.Else, yychar, yyline, yytext());}
+/* Acciones */
+( "DISPLAY" ) 					{return new Symbol(sym.Display, yychar, yyline, yytext());}
+( "ACCEPT" ) 					{return new Symbol(sym.Accept, yychar, yyline, yytext());}
+( "COMPUTE" ) 					{return new Symbol(sym.Compute, yychar, yyline, yytext());}
 
-/* Palabra reservada While */
-( while ) {return new Symbol(sym.While, yychar, yyline, yytext());}
+/* Operadores */
+( "+" ) 					{return new Symbol(sym.Suma, yychar, yyline, yytext());}
+( "-" ) 					{return new Symbol(sym.Resta, yychar, yyline, yytext());}
+( "*" ) 					{return new Symbol(sym.Multiplicacion, yychar, yyline, yytext());}
+( "/" ) 					{return new Symbol(sym.Division, yychar, yyline, yytext());}
 
-/* Operador Igual */
-( "=" ) {return new Symbol(sym.Igual, yychar, yyline, yytext());}
+/* Estructuras condicionales y palabras reservadas*/
+( "IF" ) 					{return new Symbol(sym.If, yychar, yyline, yytext());}
+( "ELSE" )					{return new Symbol(sym.Else, yychar, yyline, yytext());}
+( "PIC" )					{return new Symbol(sym.Pic, yychar, yyline, yytext());}
+( "VALUE" )					{return new Symbol(sym.Value, yychar, yyline, yytext());}
 
-/* Operador Suma */
-( "+" ) {return new Symbol(sym.Suma, yychar, yyline, yytext());}
+/* Simbolos condicion */
+( "=" ) 					{return new Symbol(sym.Igual, yychar, yyline, yytext());}
+( "<" ) 					{return new Symbol(sym.MenorQue, yychar, yyline, yytext());}
+( ">" ) 					{return new Symbol(sym.MayorQue, yychar, yyline, yytext());}
+( "<=" ) 					{return new Symbol(sym.MenorIgual, yychar, yyline, yytext());}
+( ">=" ) 					{return new Symbol(sym.MayorIgual, yychar, yyline, yytext());}
+( "<>" ) 					{return new Symbol(sym.Diferente, yychar, yyline, yytext());}
 
-/* Operador Resta */
-( "-" ) {return new Symbol(sym.Resta, yychar, yyline, yytext());}
-
-/* Operador Multiplicacion */
-( "*" ) {return new Symbol(sym.Multiplicacion, yychar, yyline, yytext());}
-
-/* Operador Division */
-( "/" ) {return new Symbol(sym.Division, yychar, yyline, yytext());}
-
-/* Parentesis de apertura */
-( "(" ) {return new Symbol(sym.Parentesis_a, yychar, yyline, yytext());}
-
-/* Parentesis de cierre */
-( ")" ) {return new Symbol(sym.Parentesis_c, yychar, yyline, yytext());}
-
-/* Llave de apertura */
-( "{" ) {return new Symbol(sym.Llave_a, yychar, yyline, yytext());}
-
-/* Llave de cierre */
-( "}" ) {return new Symbol(sym.Llave_c, yychar, yyline, yytext());}
-
-/* Marcador de inicio de algoritmo */
-( "main" ) {return new Symbol(sym.Main, yychar, yyline, yytext());}
-
-/* Punto y coma */
-( ";" ) {return new Symbol(sym.P_coma, yychar, yyline, yytext());}
+/* Punto para finalizar declaraciones como un ; */
+( "." ) 					{return new Symbol(sym.Punto, yychar, yyline, yytext());}
 
 /* Identificador */
-{L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}
+{L}({L}|{D})* 				{return new Symbol(sym.Identificador, yychar, yyline, yytext());}
 
 /* Numero */
-("(-"{D}+")")|{D}+ {return new Symbol(sym.Numero, yychar, yyline, yytext());}
+("(-"{D}+")")|{D}+ 			{return new Symbol(sym.Numero, yychar, yyline, yytext());}
+
+/* Numero decimal */
+({D}+"."{D}*)|("."{D}+) 	{return new Symbol(sym.NumeroDecimal, yychar, yyline, yytext());}
+
+/* Cadena*/
+\"([^\\\"]|\\[nt])*\" 		{return new Symbol(sym.Cadena, yychar, yyline, yytext());}
 
 /* Error de analisis */
- . {return new Symbol(sym.ERROR, yychar, yyline, yytext());}
+ . 							{return new Symbol(sym.ERROR, yychar, yyline, yytext());}
