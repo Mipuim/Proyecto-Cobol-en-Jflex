@@ -9,6 +9,9 @@ import java_cup.runtime.Symbol;
 %char
 L=[a-zA-Z_]+
 D=[0-9]+
+E=[9]
+X=[X]
+A=[A]
 espacio=[ ,\t,\r,\n]+
 %{
     private Symbol symbol(int type, Object value){
@@ -38,10 +41,15 @@ espacio=[ ,\t,\r,\n]+
 ("WORKING-STORAGE SECTION")		{return new Symbol(sym.WorkingStorageSection, yychar, yyline, yytext());}
 
 /* Nivel para declarar variables */
-( '77'|'01')					{return new Symbol(sym.Nivel, yychar, yyline, yytext());}
+( 77|01)					{return new Symbol(sym.Nivel, yychar, yyline, yytext());}
 
 /* Tipos de datos */
-( '9\\(' {D} '\\)' | 'X\\(' {D} '\\)' | 'A\\(' {D} '\\)' | '9\\(' {D} '\\)V' {D} | 'S9\\(' {D} '\\)' | 'S9\\(' {D} '\\)V' {D} ) 	{return new Symbol(sym.TipoDato, yychar, yyline, yytext());}
+( "(" )							{return new Symbol(sym.ParentesisA, yychar, yyline, yytext());}
+( ")" )							{return new Symbol(sym.Parentesisc, yychar, yyline, yytext());}
+{E}								{return new Symbol(sym.TipoEntero, yychar, yyline, yytext());}
+{X}								{return new Symbol(sym.TipoAlfanumerico, yychar, yyline, yytext());}
+{A}								{return new Symbol(sym.TipoAlfabeto, yychar, yyline, yytext());}
+('S9')							{return new Symbol(sym.TipoSignoNumero, yychar, yyline, yytext());}
 
 /* Valor Especial */
 ( 'TRUE' | 'FALSE' | 'ZERO' ) 	{return new Symbol(sym.ValorEspecial, yychar, yyline, yytext());}
@@ -81,7 +89,8 @@ espacio=[ ,\t,\r,\n]+
 {L}({L}|{D})* 				{return new Symbol(sym.Identificador, yychar, yyline, yytext());}
 
 /* Numero */
-("(-"{D}+")")|{D}+ 			{return new Symbol(sym.Numero, yychar, yyline, yytext());}
+{D}+ 			{System.out.println("Numero: " + yytext()); return new Symbol(sym.Numero, yychar, yyline, yytext());}
+
 
 /* Numero decimal */
 ({D}+"."{D}*)|("."{D}+) 	{return new Symbol(sym.NumeroDecimal, yychar, yyline, yytext());}

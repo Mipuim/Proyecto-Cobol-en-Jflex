@@ -5,6 +5,10 @@ import static codigo.Tokens.*;
 %type Tokens
 L=[a-zA-Z_]+
 D=[0-9]+
+E=[9]
+X=[X]
+A=[A]
+S=[S9]
 espacio=[ \t\r]+
 nueva_linea=[\n]
 %{
@@ -28,12 +32,19 @@ nueva_linea=[\n]
 ^.{7}.*(VALUE)         			{lexeme=yytext().substring(yytext().indexOf("VALUE")); 							return Value;}
 
 ^.{7}.*(<>)                		{lexeme=yytext(); 		return Diferente;}
-^.{7}.*(IF)                		{lexeme=yytext().substring(yytext().indexOf("IF")); 		return If;}
 ^.{7}.*>                		{lexeme=yytext().substring(yytext().indexOf(">")); 			return MayorQue;}
 ^.{7}.*<                		{lexeme=yytext().substring(yytext().indexOf("<")); 			return MenorQue;}
 ^.{7}.*>=                		{lexeme=yytext().substring(yytext().indexOf(">=")); 		return MayorIgual;}
 ^.{7}.*<=                		{lexeme=yytext().substring(yytext().indexOf("<=")); 		return MenorIgual;}
+^.{7}.*(IF)                		{lexeme=yytext().substring(yytext().indexOf("IF")); 		return If;}
+^.{7}.*(ELSE)                	{lexeme=yytext().substring(yytext().indexOf("ELSE")); 		return Else;}
+^.{7}.*\(                		{lexeme=yytext().substring(yytext().indexOf("(")); 			return ParentesisA;}
+^.{7}.*\)                		{lexeme=yytext().substring(yytext().indexOf(")")); 			return ParentesisC;}
 
+^.{7}.*{E}                		{lexeme=yytext().substring(7); 							return TipoEntero;}
+^.{7}.*{X}                		{lexeme=yytext().substring(7); 							return TipoAlfanumerico;}
+^.{7}.*{A}                		{lexeme=yytext().substring(7); 							return TipoAlfabeto;}
+^.{7}.*("S9")                		{lexeme=yytext().substring(7); 							return TipoSignoNumero;}
 
 ^.{7}.*\+                		{lexeme=yytext().substring(yytext().indexOf("+")); 		return Suma;}
 ^.{7}.*-                		{lexeme=yytext().substring(yytext().indexOf("-")); 		return Resta;}

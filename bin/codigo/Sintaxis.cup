@@ -8,6 +8,7 @@ parser code {:
     
     public void syntax_error(Symbol s){
         this.s = s;
+        System.out.println("Syntax error at line " + s.left + ", column " + s.right + ": " + s.value);
     }
 
     public Symbol getS(){
@@ -22,23 +23,31 @@ parser code {:
 :};
 
 terminal IdentificationDivision, DataDivision, ProcedureDivision, ProgramId,
-	WorkingStorageSection, Nivel, TipoDato, ValorEspecial, StopRun, Display, Accept, Compute,
+	WorkingStorageSection, Nivel, ValorEspecial, StopRun, Display, Accept, Compute,
+	TipoEntero, TipoAlfanumerico, TipoAlfabeto, TipoSignoNumero, ParentesisA, ParentesisC,
 	Suma, Resta, Multiplicacion, Division, If, Else, Pic, Value, 
-	Igual, MenorQue, MayorQue, MenorIgual, MayorIgual, Diferente,
+	Igual, MenorQue, MayorQue, MenorIgual, MayorIgual, Diferente, 
 	Punto, Identificador, Numero, NumeroDecimal, Cadena, ERROR;
 
 non terminal INICIO, DATA, PROCEDIMIENTO, DECLARACION, LITERAL, SENTENCIAS, SENTENCIA, 
-	MOSTRAR, EXPRESION, CONDICIONALES_ESTRUCTURA, IFCONDITION, VALOR, CONDICION;
+	MOSTRAR, EXPRESION, CONDICIONALES_ESTRUCTURA, IFCONDITION, VALOR, CONDICION, TIPODATO;
 
 
 INICIO ::= IdentificationDivision Punto ProgramId Punto Identificador Punto DATA PROCEDIMIENTO;
 
-DATA ::= DataDivision Punto WorkingStorageSection Punto DECLARACION Punto;
+DATA ::= DataDivision Punto WorkingStorageSection Punto DECLARACION ;
 
-DECLARACION ::= Nivel Identificador Pic TipoDato Value LITERAL Punto |
-				Nivel Identificador Pic TipoDato Punto;
+DECLARACION ::= Nivel Identificador Pic TIPODATO LITERAL Punto |
+				Nivel Identificador Pic TIPODATO Punto|
+				Nivel Identificador Pic TIPODATO LITERAL Punto DECLARACION|
+				Nivel Identificador Pic TIPODATO Punto DECLARACION;
 
-LITERAL ::= Numero | NumeroDecimal | Cadena | ValorEspecial;
+TIPODATO ::= TipoEntero 		ParentesisA Numero ParentesisC |
+				TipoAlfanumerico ParentesisA Numero ParentesisC |
+				TipoAlfabeto 	ParentesisA Numero ParentesisC |
+				TipoSignoNumero ParentesisA Numero ParentesisC ;
+
+LITERAL ::= Value Numero ;
 
 PROCEDIMIENTO ::= ProcedureDivision Punto SENTENCIAS StopRun Punto;
 

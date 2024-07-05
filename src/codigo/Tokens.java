@@ -14,12 +14,22 @@ public enum Tokens {
     Pic,
     Value,
     
-    If,
+    
     MayorQue,
     MenorQue,
     MayorIgual,
     MenorIgual,
     Diferente,
+    
+    If,
+    Else,
+    ParentesisA,
+    ParentesisC,
+    
+    TipoEntero,
+    TipoAlfanumerico,
+    TipoAlfabeto,
+    TipoSignoNumero,
     
     Suma,
     Resta,

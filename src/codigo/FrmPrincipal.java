@@ -51,7 +51,7 @@ public class FrmPrincipal extends JFrame {
 
 	public FrmPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 449, 604);
+		setBounds(100, 100, 451, 683);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -146,9 +146,6 @@ public class FrmPrincipal extends JFrame {
 							break;
 							
 							
-						case If:
-							resultado += "<IF>\t\t" + lexer.lexeme + nuevaLinea;
-							break;
 						case MayorQue:
 							resultado += "<MAYOR QUE>\t\t" + lexer.lexeme + nuevaLinea;
 							break;
@@ -163,6 +160,33 @@ public class FrmPrincipal extends JFrame {
 							break;
 						case Diferente:
 							resultado += "<DIFERENTE>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+							
+							
+						case If:
+							resultado += "<IF>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case Else:
+							resultado += "<ELSE>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case ParentesisA:
+							resultado += "<Parentesis Apertura>\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case ParentesisC:
+							resultado += "<Parentesis Cierre>\t" + lexer.lexeme + nuevaLinea;
+							break;
+							
+						case TipoEntero:
+							resultado += "<Tipo Entero>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case TipoAlfanumerico:
+							resultado += "<Tipo Alfanumerico>\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case TipoAlfabeto:
+							resultado += "<Tipo Alfabeto>\t\t" + lexer.lexeme + nuevaLinea;
+							break;
+						case TipoSignoNumero:
+							resultado += "<Tipo Numero con Signo>\t" + lexer.lexeme + nuevaLinea;
 							break;
 							
 							
@@ -213,7 +237,7 @@ public class FrmPrincipal extends JFrame {
 		contentPane.add(btnAnalizarLexico);
 		
 		JTextArea txtResultado_Sintactico = new JTextArea();
-		txtResultado_Sintactico.setBounds(12, 512, 412, 35);
+		txtResultado_Sintactico.setBounds(12, 512, 412, 113);
 		contentPane.add(txtResultado_Sintactico);
 		
 		JButton btnAnalizarSintactico = new JButton("Analizar - Sintactico");
