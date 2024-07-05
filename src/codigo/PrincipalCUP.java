@@ -12,17 +12,12 @@ import java_cup.Main;
 public class PrincipalCUP {
 
     public static void main(String[] args) throws internal_error, IOException, Exception {
-        String ruta2 = "C:/Users/SARA/eclipse-workspace/ProyectoCobol/src/codigo/LexerCup.flex"; // ruta para obtener LexerCup.flex
+      
         String[] rutaS = {"-parser", "Sintax", "-symbols", "sym", "C:/Users/SARA/eclipse-workspace/ProyectoCobol/src/codigo/Sintaxis.cup"}; // ruta para Sintaxis.cup
-        generar(ruta2, rutaS);
+        generar( rutaS);
     }
 
-    public static void generar(String ruta2, String[] rutaS) throws internal_error, IOException, Exception {
-        File archivo;
-        // Generar el archivo LexerCup.flex
-        archivo = new File(ruta2);
-        JFlex.Main.generate(archivo);
-        System.out.println("genere del LexerCup.java");
+    public static void generar( String[] rutaS) throws internal_error, IOException, Exception {
 
   /*      // Crear una instancia de ComplexSymbolFactory y asignarla al parser
         ComplexSymbolFactory csf = new ComplexSymbolFactory();

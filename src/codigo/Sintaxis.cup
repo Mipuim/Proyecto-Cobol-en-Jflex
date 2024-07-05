@@ -60,56 +60,8 @@ EXPRESION ::= Identificador | LITERAL |
 CONDICIONALES_ESTRUCTURA ::= IFCONDITION;
 
 IFCONDITION ::= If VALOR CONDICION VALOR SENTENCIA |
-				If VALOR CONDICION VALOR SENTENCIA Else SENTENCIA; 
+				If VALOR CONDICION VALOR SENTENCIA Else SENTENCIA;
 		
 VALOR ::= Identificador | Numero | Cadena | NumeroDecimal | ValorEspecial;
 
 CONDICION ::= Igual | MenorQue | MayorQue | MenorIgual | MayorIgual | Diferente;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-terminal Linea, T_dato, Int, If, Else, While, 
-    Igual, Suma, Resta, Multiplicacion, Division, Parentesis_a, Parentesis_c,
-    Llave_a, Llave_c, Main, P_coma, Identificador, Numero, ERROR;
-
-non terminal INICIO, SENTENCIA, DECLARACION, IF, WHILE;
-
-start with INICIO;
-
-INICIO ::= 
-    Int Main Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c |
-    Main Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c
-;
-
-SENTENCIA ::= 
-    SENTENCIA DECLARACION |
-    DECLARACION |
-    SENTENCIA IF | 
-    IF |
-    SENTENCIA WHILE |
-    WHILE
-;
-
-DECLARACION ::= 
-    Int Identificador P_coma | 
-    Int Identificador Igual Numero P_coma |
-    T_dato Identificador P_coma | 
-    T_dato Identificador Igual Numero P_coma
-;
-
-IF ::= If Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c
-;
-
-WHILE ::= While Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c
-;
